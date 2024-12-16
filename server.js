@@ -60,7 +60,10 @@ app.post('/register', async (req, res) => {
         if (existingUser) {
             return res.status(400).send({ error: 'User already exists' });
         }
-
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,10}$/;
+        if(!regex.test(password)){
+            return res.status(400).send({ error: '• Follow Password Rule' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
         const newUser = new User({
             name, // Save name
@@ -73,6 +76,7 @@ app.post('/register', async (req, res) => {
         res.status(201).send({ message: 'User registered successfully' , token:'hello' });
     } catch (error) {
         res.status(500).send({ error: 'Internal server error' });
+    
     }
 });
 

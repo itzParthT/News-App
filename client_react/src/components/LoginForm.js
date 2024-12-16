@@ -40,7 +40,7 @@ const Login = ({ setToken }) => {
                             onChange={(e) => {
                                 const input = e.target.value;
                                 // Allow input only if it doesn't start with zero
-                                if (/^[^0].*/.test(input) || input === "") {
+                                if (/^[^\d].*/.test(input) || input === "") {
                                     setUsername(input);
                                 }
                             }}

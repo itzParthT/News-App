@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import PasswordChecklist from "react-password-checklist"
 
 const Register = ({ setToken }) => {
     const [name, setName] = useState('');
@@ -25,6 +26,7 @@ const Register = ({ setToken }) => {
             });
         } catch (error) {
             alert(error.response?.data?.error || 'Registration failed');
+            console.log(error.message);
         }
     };
 
@@ -97,7 +99,7 @@ const Register = ({ setToken }) => {
                         value={name}
                         onChange={(e) => {
                             const value = e.target.value;
-                            if (/^[a-zA-Z]*$/.test(value)) { // Regular expression to allow only alphabets
+                            if (/^[a-zA-Z\s]*$/.test(value)) { // Regular expression to allow only alphabets nd space
                                 setName(value);
                             }
                         }}
@@ -110,8 +112,8 @@ const Register = ({ setToken }) => {
                         value={username}
                         onChange={(e) => {
                             const input = e.target.value;
-                            // Allow input only if it doesn't start with zero
-                            if (/^[^0].*/.test(input) || input === "") {
+                            // Allow input only if it doesn't start with digit
+                            if (/^[^\d].*/.test(input) || input === "") {
                                 setUsername(input);
                             }
                         }}
@@ -126,6 +128,21 @@ const Register = ({ setToken }) => {
                         required
                         style={styles.input}
                     />
+                    <PasswordChecklist
+				rules={["minLength","maxLength","specialChar","number","capital"]}
+				minLength={5}
+                maxLength={10}
+				value={password}
+				
+				messages={{
+					minLength: "The password is minimum  5 characters.",
+                    maxLength: "The password is maximum  10 characters.",
+					specialChar: "The password has special characters.",
+					number: "The password has a number.",
+					capital: "The password has a capital letter.",
+				
+				}}
+			/>
                     <button
                         type="submit"
                         style={styles.button}

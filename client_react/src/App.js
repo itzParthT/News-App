@@ -8,9 +8,9 @@ import NewsFeed2 from './components/NewsFeed2';
 
 const App = () => {
     const [token, setToken] = useState('');
-    
         // Clear sessionStorage when the page is refreshed
         sessionStorage.clear();
+        
 
 
     return (
@@ -20,7 +20,7 @@ const App = () => {
             
             <Routes>
                 {/* Render Login if there's no token */}
-                <Route path="/"  element={token ? <NewsFeed2 /> : <NewsFeed2 /> }/>
+                <Route path="/"  element={<NewsFeed2 /> }/>
 
                 {/* <Route path="/login" element={<Login setToken={setToken} />} /> */}
                 
